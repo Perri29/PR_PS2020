@@ -1,0 +1,19 @@
+# Name: Backup Copy of Modified PBIX File
+
+# Backup copy PBIX
+# PWL 12/23/2020
+
+
+#Source Folder Containing files
+$Source= "C:\Users\userID\Documents\Power BI\Azure Consumption Report"
+
+#Destination Folder to copy files to
+$Destination= "C:\Users\userID\OneDrive\Reports\Backup_DCOD Azure Consumption - PBIX File (PWL)"
+
+#Specific files to be copied
+$files=@("name.pbix")
+
+Get-ChildItem -Path $Source -Recurse -include ($files)|
+Where-Object {
+  $_.LastWriteTime -gt [datetime]::Now.AddHours(-24)
+}| Copy-Item -Destination $Destination -Force
